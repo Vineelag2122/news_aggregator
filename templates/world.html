@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>World News</title>
+    <style>
+        .card:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card-img-top {
+            min-height: 200px;
+            object-fit: cover;
+            background-color: #f8f9fa;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Latest World News</h2>
+
+{% if articles %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for article in articles %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ article.image }}" 
+                 class="card-img-top" 
+                 alt="{{ article.title }}" 
+                 style="object-fit: cover; height: 200px;"
+                 onerror="this.src='{{ url_for('static', filename='images/veggies.jpg') }}';">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{ article.link }}" target="_blank" class="text-decoration-none">{{ article.title }}</a>
+                </h5>
+                <p class="card-text">{{ article.summary }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-warning" role="alert">
+    Sorry, no entertainment news available right now. Please try again later.
+</div>
+{% endif %}
+{% endblock %}

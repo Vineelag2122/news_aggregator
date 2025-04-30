@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    .signup-container {
+        background: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .signup-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .signup-header h3 {
+        font-weight: 700;
+        color: #333;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 50px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0 15px;
+        font-size: 15px;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    }
+
+    .form-control-icon {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #444;
+    }
+
+    .btn-signup {
+        width: 100%;
+        height: 50px;
+        border: none;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #4b6cb7, #182848);
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-signup:hover {
+        background: linear-gradient(135deg, #182848, #4b6cb7);
+        transform: scale(1.01);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-footer {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 14px;
+    }
+
+    .signup-footer a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .signup-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+    // Client-side validation for the signup form
+    function validateSignupForm(event) {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm").value;
+        const email = document.getElementById("email").value;
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            event.preventDefault(); // Prevent form submission
+            return false;
+        }
+
+        // Check if email is in a valid format
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            event.preventDefault(); // Prevent form submission
+            return false;
+        }
+
+        // Allow form submission if all checks pass
+        return true;
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="signup-container">
+                <div class="signup-header">
+                    <h3>Create an Account</h3>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul class="flashes">
+                            {% for category, message in messages %}
+                                <li class="alert alert-{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+
+
+                <form method="POST" action="{{ url_for('signup') }}">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" class="form-control" required>
+                        <i class="fas fa-user form-control-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" required>
+                        <i class="fas fa-envelope form-control-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                        <i class="fas fa-lock form-control-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm">Confirm Password</label>
+                        <input type="password" name="confirm" id="confirm" class="form-control" required>
+                        <i class="fas fa-lock form-control-icon"></i>
+                    </div>
+                    <button type="submit" class="btn-signup">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </form>
+                <div class="signup-footer mt-4">
+                    <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>About Us</title>
+    <style>
+        .about-section {
+            padding: 60px 20px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="about-section text-center">
+        <h1 class="mb-4">About Our News Portal 📰</h1>
+        <p class="lead">
+            Welcome to our News Aggregator — your one-stop destination for the latest headlines across India and the globe.
+            Whether you're into politics, sports, business, science, or opinion pieces, we’ve got you covered.
+        </p>
+        <p class="mt-3">
+            Our platform fetches real-time updates from trusted news sources and presents them to you in a clean,
+            easy-to-navigate format. Built using Python and Flask, it’s lightweight, fast, and designed for modern news consumption.
+        </p>
+        <p class="mt-3">
+            This project is created with ❤️ by a team passionate about technology, information, and staying informed.
+        </p>
+    </div>
+</div>
+{% endblock %}

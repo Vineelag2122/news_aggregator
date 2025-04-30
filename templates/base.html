@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='flash news.png') }}" type="image/x-icon">
+    {% block head %}{% endblock %}
+    <style>
+        .navbar-brand {
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 10px 0;
+        }
+        .nav-link {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 1rem;
+        }
+        .header-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .header-epaper {
+            color: #d00;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .top-header {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .btn-subscribe {
+            background-color: #d00;
+            color: white;
+            font-weight: 500;
+        }
+        .btn-login {
+            font-weight: 500;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid #ddd;
+        }
+        .footer-links a {
+            color: #444;
+            text-decoration: none;
+            margin-right: 1.5rem;
+        }
+        .footer-links a:hover {
+            color: #000;
+        }
+        .footer-copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-social i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+        <a class="navbar-brand" href="/">TIMES OF SRM</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/india">India</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/world">World</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/entertainment">Entertainment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/sports">Sports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/data">Data</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/health">Health</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/opinion">Opinion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2 text-danger" href="/science">Science</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="/business">Business</a>
+                </li>    
+                <li class="nav-item"><a class="nav-link" href="/favourites">Favourites</a></li>
+            </ul>
+            <div class="d-flex">
+                <a href="/about" class="btn btn-outline-secondary me-2">About Us</a>
+                {% if session.get('user_id') %}
+                    <a href="/logout" class="btn btn-outline-danger">Logout <i class="fas fa-sign-out-alt"></i></a>
+                {% else %}
+                    <a href="/login" class="btn btn-outline-primary">LOGIN <i class="fas fa-user"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        <!-- Content will be inserted here by templates that extend this base template -->
+        {% endblock %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="footer-links mb-4">
+                        <a href="/about">About Us</a>
+                        <a href="/contact">Contact Us</a>
+                        <a href="/terms">Terms of Use</a>
+                        <a href="/privacy">Privacy Policy</a>
+                        <a href="/faq">FAQ</a>
+                        <a href="/feedback">Feedback</a>
+                    </div>
+                    <span id="current-date" style="color: #000;"></span>
+                    <div class="footer-copyright">
+                        &copy; 2025 News Aggregator. All rights reserved.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-social text-md-end">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Display current date
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date();
+            document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+        });
+    </script>
+</body>
+</html>

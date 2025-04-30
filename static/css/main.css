@@ -1,0 +1,27 @@
+/* Ensure the body takes full height */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Use flexbox to push footer to the bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Make the main content flexible */
+main {
+    flex: 1;
+}
+
+/* Footer stays fixed at the bottom */
+footer {
+    background-color: #1e1e2f;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.95rem;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
